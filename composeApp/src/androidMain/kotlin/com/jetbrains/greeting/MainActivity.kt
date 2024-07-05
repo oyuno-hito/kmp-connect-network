@@ -4,25 +4,26 @@ import App
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
-import infra.http.Ktor
+import com.jetbrains.greeting.viewModel.HttpRequestViewModel
+import infra.client.Ktor
+import infra.repository.HttpRepository
 
 class MainActivity : ComponentActivity() {
-    lateinit var ktor: Ktor
+    lateinit var httpRepository: HttpRepository
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        ktor = Ktor()
+        val ktor = Ktor()
+        httpRepository = HttpRepository(ktor)
+
+        val getHttpViewModel = HttpRequestViewModel(httpRepository)
+        val sendHttpViewModel = HttpRequestViewModel(httpRepository)
 
         setContent {
-            App()
+            App(
+                getHttpViewModel,
+                sendHttpViewModel,
+            )
         }
     }
-}
-
-@Preview
-@Composable
-fun AppAndroidPreview() {
-    App()
 }
