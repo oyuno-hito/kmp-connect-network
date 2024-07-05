@@ -5,7 +5,7 @@ import com.jetbrains.greeting.viewModel.HttpRequest.Initial
 import com.jetbrains.greeting.viewModel.HttpRequest.Loading
 import com.jetbrains.greeting.viewModel.HttpRequest.Stable
 import domain.HttpCondition
-import infra.http.Ktor
+import infra.repository.HttpRepository
 import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -15,15 +15,17 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
-class HttpRequestViewModel : ViewModel() {
+class HttpRequestViewModel(
+    private val httpRepository: HttpRepository
+) : ViewModel() {
     private val _state: MutableStateFlow<HttpRequest> = MutableStateFlow(Initial)
     val state = _state.asStateFlow()
 
     // TODO: Scopeの検討
     @OptIn(DelicateCoroutinesApi::class)
-    fun receiveHttp(ktor: Ktor): Job = GlobalScope.launch(Dispatchers.IO) {
+    fun receiveHttp(): Job = GlobalScope.launch(Dispatchers.IO) {
         _state.update { _ -> Loading }
-        val condition = ktor.get()
+        val condition = httpRepository.get()
         _state.update { _ ->
             Stable.Condition(
                 condition
@@ -33,9 +35,9 @@ class HttpRequestViewModel : ViewModel() {
 
     // TODO: Scopeの検討
     @OptIn(DelicateCoroutinesApi::class)
-    fun sendHttp(ktor: Ktor): Job = GlobalScope.launch(Dispatchers.IO) {
+    fun sendHttp(): Job = GlobalScope.launch(Dispatchers.IO) {
         _state.update { _ -> Loading }
-        val condition = ktor.post()
+        val condition = httpRepository.post()
         _state.update { _ ->
             Stable.Condition(
                 condition

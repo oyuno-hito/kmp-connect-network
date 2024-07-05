@@ -15,18 +15,17 @@ import org.jetbrains.compose.ui.tooling.preview.Preview
 @Composable
 @Preview
 fun App(
-    getHttpViewModel: HttpRequestViewModel = HttpRequestViewModel(),
-    sendHttpViewModel: HttpRequestViewModel = HttpRequestViewModel()
+    getHttpViewModel: HttpRequestViewModel,
+    sendHttpViewModel: HttpRequestViewModel
 ) {
     MaterialTheme {
-        val activity = LocalContext.current as MainActivity
         val getHttpState by getHttpViewModel.state.collectAsState()
         val sendHttpState by sendHttpViewModel.state.collectAsState()
 
         Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
             Button(
                 onClick = {
-                    sendHttpViewModel.sendHttp(activity.ktor)
+                    sendHttpViewModel.sendHttp()
                 },
                 enabled = sendHttpState !is HttpRequest.Loading
             ) {
@@ -42,7 +41,7 @@ fun App(
             }
             Button(
                 onClick = {
-                    getHttpViewModel.receiveHttp(activity.ktor)
+                    getHttpViewModel.receiveHttp()
                 },
                 enabled = getHttpState !is HttpRequest.Loading
             ) {
