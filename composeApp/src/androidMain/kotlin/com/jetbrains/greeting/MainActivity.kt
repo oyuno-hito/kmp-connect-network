@@ -5,8 +5,11 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import com.jetbrains.greeting.viewModel.HttpRequestViewModel
+import com.jetbrains.greeting.viewModel.MqttViewModel
 import infra.client.Ktor
+import infra.client.Mqtt
 import infra.repository.HttpRepository
+import infra.repository.MqttRepository
 
 class MainActivity : ComponentActivity() {
     lateinit var httpRepository: HttpRepository
@@ -18,11 +21,13 @@ class MainActivity : ComponentActivity() {
 
         val getHttpViewModel = HttpRequestViewModel(httpRepository)
         val sendHttpViewModel = HttpRequestViewModel(httpRepository)
+        val mqttViewModel = MqttViewModel()
 
         setContent {
             App(
                 getHttpViewModel,
                 sendHttpViewModel,
+                mqttViewModel,
             )
         }
     }

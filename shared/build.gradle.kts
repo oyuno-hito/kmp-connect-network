@@ -37,6 +37,9 @@ kotlin {
             implementation("io.ktor:ktor-client-cio:$ktorVersion")
             implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
 
+            implementation(libs.kmqtt.common)
+            implementation(libs.kmqtt.client)
+
             implementation(libs.kotlinx.serialization.json)
         }
     }
