@@ -12,6 +12,7 @@ androidx-material = "1.12.0"
 androidx-test-junit = "1.2.0"
 compose-plugin = "1.6.11"
 junit = "4.13.2"
+kmqttCommon = "0.4.8"
 kotlin = "2.0.0"
 kotlinxDatetime = "0.1.1"
 kotlinxSerializationJson = "1.7.1"
@@ -20,6 +21,8 @@ pagingCommonAndroid = "3.3.0"
 
 [libraries]
 androidx-lifecycle-viewmodel-ktx = { module = "androidx.lifecycle:lifecycle-viewmodel-ktx", version.ref = "lifecycleViewmodelKtx" }
+kmqtt-client = { module = "io.github.davidepianca98:kmqtt-client", version.ref = "kmqttCommon" }
+kmqtt-common = { module = "io.github.davidepianca98:kmqtt-common", version.ref = "kmqttCommon" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
